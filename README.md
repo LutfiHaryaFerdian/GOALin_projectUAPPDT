@@ -12,7 +12,6 @@ Sistem ini merupakan aplikasi pemesanan lapangan futsal berbasis web yang dibang
 
 Stored procedure berperan sebagai SOP (Standard Operating Procedure) dalam proses bisnis pemesanan dan manajemen status booking lapangan futsal. Semua logic yang krusial — seperti validasi ketersediaan waktu, pengecekan harga, dan transaksi — ditangani di tingkat database untuk menjamin **konsistensi dan integritas data**.
 
-Semua prosedur disimpan di file: `scripts/03-create-procedures.sql`.
 ![procedure](https://github.com/user-attachments/assets/d13f14f6-5f05-42b9-86e3-36759ec160d0)
 
 #### Beberapa procedure penting yang digunakan:
@@ -72,6 +71,8 @@ Semua prosedur disimpan di file: `scripts/03-create-procedures.sql`.
 ### 🚨 Trigger
 
 Trigger pada sistem **Goalin Futsal** berfungsi sebagai *penjaga integritas data otomatis* di sisi database. Setiap kali ada proses booking, trigger akan memverifikasi berbagai aspek penting sebelum data disimpan atau diubah.
+
+![triggers](https://github.com/user-attachments/assets/8a1b570e-4c08-43e9-94f2-c6e4a5e179be)
 
 > Dengan memindahkan logika validasi ke database melalui trigger, sistem menjadi lebih tahan terhadap kesalahan dari sisi aplikasi (misalnya: validasi di-*bypass* dari frontend atau bug di backend).
 
@@ -198,6 +199,8 @@ END IF;
 ### 📺 Stored Function
 
 Stored function digunakan untuk mengambil data informasi pengguna atau status lapangan.
+
+![function](https://github.com/user-attachments/assets/7b747df9-8bac-47bd-a18f-9831ff0bbba5)
 
 Contoh function `get_user_balance(user_id)`:
 ```sql
