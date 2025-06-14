@@ -4,7 +4,7 @@ require_once 'config/config.php';
 $database = new Database();
 $db = $database->getConnection();
 
-// Get available fields
+
 $query = "SELECT * FROM fields WHERE status = 'active' ORDER BY name";
 $stmt = $db->prepare($query);
 $stmt->execute();
@@ -129,7 +129,7 @@ $fields = $stmt->fetchAll(PDO::FETCH_ASSOC);
     </style>
 </head>
 <body>
-    <!-- Navigation -->
+
     <nav class="navbar navbar-expand-lg navbar-light fixed-top">
         <div class="container">
             <a class="navbar-brand fw-bold" href="index.php">
@@ -178,7 +178,7 @@ $fields = $stmt->fetchAll(PDO::FETCH_ASSOC);
         </div>
     </nav>
 
-    <!-- Hero Section -->
+
     <section class="hero-section">
         <div class="container">
             <div class="row justify-content-center">
@@ -207,7 +207,7 @@ $fields = $stmt->fetchAll(PDO::FETCH_ASSOC);
         </div>
     </section>
 
-    <!-- Features Section -->
+
     <section class="py-5">
         <div class="container">
             <div class="row">
@@ -236,7 +236,7 @@ $fields = $stmt->fetchAll(PDO::FETCH_ASSOC);
         </div>
     </section>
 
-    <!-- Fields Section -->
+
     <section id="fields" class="py-5 bg-light">
         <div class="container">
             <div class="text-center mb-5">
@@ -278,7 +278,7 @@ $fields = $stmt->fetchAll(PDO::FETCH_ASSOC);
         </div>
     </section>
 
-    <!-- Footer -->
+
     <footer class="footer">
         <div class="container">
             <div class="row">
