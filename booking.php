@@ -1,7 +1,7 @@
 <?php
 require_once 'config/config.php';
 requireLogin();
-requireUser(); // Only users can access booking page
+requireUser(); 
 
 $database = new Database();
 $db = $database->getConnection();
@@ -10,19 +10,19 @@ $success = '';
 $error = '';
 $selected_field_id = isset($_GET['field_id']) ? (int)$_GET['field_id'] : 0;
 
-// Get fields
+
 $query = "SELECT * FROM fields WHERE status = 'active' ORDER BY name";
 $stmt = $db->prepare($query);
 $stmt->execute();
 $fields = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-// Get time slots
+
 $query = "SELECT * FROM time_slots ORDER BY start_time";
 $stmt = $db->prepare($query);
 $stmt->execute();
 $time_slots = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-// Get bank accounts
+
 $bank_accounts = [
     'bca' => 'BCA - 1234567890 (GOALin Futsal)',
     'bni' => 'BNI - 0987654321 (GOALin Futsal)',
@@ -50,11 +50,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     } elseif (strtotime($booking_date) < strtotime(date('Y-m-d'))) {
         $error = 'Tanggal booking tidak boleh kurang dari hari ini';
     } else {
-        // Begin transaction
+    
         $db->beginTransaction();
         
         try {
-            // Call stored procedure
+ 
             $query = "CALL buatBooking(?, ?, ?, ?, ?, ?, @booking_id, @status)";
             $stmt = $db->prepare($query);
             $stmt->execute([
@@ -66,20 +66,20 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $notes
             ]);
             
-            // Get results
+
             $result = $db->query("SELECT @booking_id as booking_id, @status as status")->fetch(PDO::FETCH_ASSOC);
             
             if (strpos($result['status'], 'SUCCESS') === 0) {
                 $booking_id = $result['booking_id'];
                 
-                // Update bank account if payment method is transfer
+
                 if ($payment_method == 'transfer' && !empty($bank_account)) {
                     $query = "UPDATE bookings SET bank_account = ? WHERE id = ?";
                     $stmt = $db->prepare($query);
                     $stmt->execute([$bank_account, $booking_id]);
                 }
                 
-                // Handle file upload for transfer payment
+
                 if ($payment_method == 'transfer' && isset($_FILES['payment_proof']) && $_FILES['payment_proof']['error'] == 0) {
                     $allowed_types = ['image/jpeg', 'image/png', 'image/jpg', 'application/pdf'];
                     $max_size = 5 * 1024 * 1024; // 5MB
@@ -94,19 +94,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         throw new Exception('Ukuran file terlalu besar. Maksimal 5MB.');
                     }
                     
-                    // Create directory if not exists
+
                     $upload_dir = 'uploads/payment_proofs/';
                     if (!is_dir($upload_dir)) {
                         mkdir($upload_dir, 0755, true);
                     }
                     
-                    // Generate unique filename
+
                     $extension = pathinfo($file['name'], PATHINFO_EXTENSION);
                     $filename = 'payment_' . $booking_id . '_' . time() . '.' . $extension;
                     $filepath = $upload_dir . $filename;
                     
                     if (move_uploaded_file($file['tmp_name'], $filepath)) {
-                        // Save to database
+
                         $query = "INSERT INTO payment_proofs (booking_id, file_path) VALUES (?, ?)";
                         $stmt = $db->prepare($query);
                         $stmt->execute([$booking_id, $filepath]);
@@ -125,7 +125,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 throw new Exception(str_replace('ERROR: ', '', $result['status']));
             }
         } catch (Exception $e) {
-            // Hanya lakukan rollBack jika transaksi aktif
+
             if ($db->inTransaction()) {
                 $db->rollBack();
             }
@@ -251,7 +251,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     </style>
 </head>
 <body>
-    <!-- Navigation -->
+
     <nav class="navbar navbar-expand-lg navbar-light bg-white fixed-top shadow">
         <div class="container">
             <a class="navbar-brand fw-bold" href="index.php">
@@ -327,7 +327,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                             <div class="mb-3">
                                 <label class="form-label">Pilih Waktu</label>
                                 <div class="availability-grid" id="timeSlots">
-                                    <!-- Time slots will be loaded here -->
+                                  
                                 </div>
                                 <input type="hidden" id="time_slot_id" name="time_slot_id" required>
                             </div>
@@ -359,7 +359,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                     </div>
                                 </div>
                                 
-                                <!-- Bank Account Selection for Transfer -->
+                              
                                 <div id="bankAccountSection" class="bank-account-section">
                                     <div class="alert alert-info">
                                         <i class="fas fa-info-circle me-2"></i>
@@ -427,10 +427,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 return;
             }
             
-            // Show loading
+          
             timeSlotsContainer.innerHTML = '<p class="text-muted">Memuat ketersediaan...</p>';
             
-            // Fetch availability
+            
             fetch('check-availability.php', {
                 method: 'POST',
                 headers: {
@@ -464,30 +464,30 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
         
         function selectTimeSlot(slotId, startTime, endTime) {
-            // Remove previous selection
+            
             if (selectedTimeSlot) {
                 document.getElementById(`slot-${selectedTimeSlot}`).classList.remove('selected');
             }
             
-            // Add new selection
+            
             selectedTimeSlot = slotId;
             document.getElementById(`slot-${slotId}`).classList.add('selected');
             document.getElementById('time_slot_id').value = slotId;
         }
         
         function selectPaymentMethod(method) {
-            // Remove selected class from all payment methods
+          
             document.querySelectorAll('.payment-method-card').forEach(card => {
                 card.classList.remove('selected');
             });
             
-            // Add selected class to the clicked payment method
+            
             document.querySelector(`#payment_${method}`).closest('.payment-method-card').classList.add('selected');
             
-            // Check the radio button
+            
             document.querySelector(`#payment_${method}`).checked = true;
             
-            // Show/hide bank account section
+            
             const bankAccountSection = document.getElementById('bankAccountSection');
             if (method === 'transfer') {
                 bankAccountSection.style.display = 'block';
@@ -517,12 +517,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             return 'Rp ' + parseInt(amount).toLocaleString('id-ID');
         }
         
-        // Initialize
+        
         if (document.getElementById('field_id').value) {
             updateTotalPrice();
         }
         
-        // Form validation
+       
         document.getElementById('bookingForm').addEventListener('submit', function(e) {
             const paymentMethod = document.querySelector('input[name="payment_method"]:checked');
             
