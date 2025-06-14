@@ -13,6 +13,7 @@ Sistem ini merupakan aplikasi pemesanan lapangan futsal berbasis web yang dibang
 Stored procedure berperan sebagai SOP (Standard Operating Procedure) dalam proses bisnis pemesanan dan manajemen status booking lapangan futsal. Semua logic yang krusial — seperti validasi ketersediaan waktu, pengecekan harga, dan transaksi — ditangani di tingkat database untuk menjamin **konsistensi dan integritas data**.
 
 Semua prosedur disimpan di file: `scripts/03-create-procedures.sql`.
+![procedure](https://github.com/user-attachments/assets/d13f14f6-5f05-42b9-86e3-36759ec160d0)
 
 #### Beberapa procedure penting yang digunakan:
 
