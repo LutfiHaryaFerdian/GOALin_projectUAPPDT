@@ -357,28 +357,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                             <small class="text-muted d-block mt-1">Transfer ke rekening kami</small>
                                         </div>
                                     </div>
-                                    <div class="col-md-6 mb-2">
-                                        <div class="payment-method-card" onclick="selectPaymentMethod('e-wallet')">
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="payment_method" id="payment_ewallet" value="e-wallet" required>
-                                                <label class="form-check-label" for="payment_ewallet">
-                                                    <i class="fas fa-wallet text-warning me-2"></i>E-Wallet
-                                                </label>
-                                            </div>
-                                            <small class="text-muted d-block mt-1">DANA, OVO, GoPay, dll</small>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6 mb-2">
-                                        <div class="payment-method-card" onclick="selectPaymentMethod('credit_card')">
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="payment_method" id="payment_credit_card" value="credit_card" required>
-                                                <label class="form-check-label" for="payment_credit_card">
-                                                    <i class="fas fa-credit-card text-danger me-2"></i>Kartu Kredit
-                                                </label>
-                                            </div>
-                                            <small class="text-muted d-block mt-1">Visa, Mastercard, dll</small>
-                                        </div>
-                                    </div>
                                 </div>
                                 
                                 <!-- Bank Account Selection for Transfer -->
