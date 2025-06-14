@@ -74,8 +74,6 @@ Trigger pada sistem **Goalin Futsal** berfungsi sebagai *penjaga integritas data
 
 ![triggers](https://github.com/user-attachments/assets/8a1b570e-4c08-43e9-94f2-c6e4a5e179be)
 
-> Dengan memindahkan logika validasi ke database melalui trigger, sistem menjadi lebih tahan terhadap kesalahan dari sisi aplikasi (misalnya: validasi di-*bypass* dari frontend atau bug di backend).
-
 #### Tujuan penggunaan trigger:
 
 * Mencegah pemesanan ganda (double booking)
@@ -83,8 +81,6 @@ Trigger pada sistem **Goalin Futsal** berfungsi sebagai *penjaga integritas data
 * Otomatis mencatat waktu perubahan data
 
 #### Contoh Trigger (Rencana Implementasi):
-
-> Berikut contoh logika trigger yang bisa diterapkan di sistem ini:
 
 * **Trigger: `prevent_double_booking`**
 
