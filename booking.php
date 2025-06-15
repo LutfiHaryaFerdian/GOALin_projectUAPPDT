@@ -287,6 +287,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     </div>
                     <div class="p-4">
                         <?php if ($error): ?>
+<<<<<<< HEAD
+=======
+                            <div class="alert alert-danger">
+                                <i class="fas fa-exclamation-triangle me-2"></i>
+                                <?php echo $error; ?>
+                            </div>
+                        <?php endif; ?>
+                        
+                        <?php if ($success): ?>
+>>>>>>> a12201a5743d2a620e1881927c6cde7cd01e7286
                             <div class="alert alert-success">
                                 <i class="fas fa-check-circle me-2"></i>
                                 <?php echo $success; ?>
