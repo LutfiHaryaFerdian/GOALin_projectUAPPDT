@@ -286,7 +286,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         <p class="mb-0">Pilih lapangan dan waktu yang tersedia</p>
                     </div>
                     <div class="p-4">
-                        <?php if ($success): ?>
+                        <?php if ($error): ?>
                             <div class="alert alert-success">
                                 <i class="fas fa-check-circle me-2"></i>
                                 <?php echo $success; ?>
