@@ -286,14 +286,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         <p class="mb-0">Pilih lapangan dan waktu yang tersedia</p>
                     </div>
                     <div class="p-4">
-                        <?php if ($success): ?>
+                        <?php if ($error): ?>
                             <div class="alert alert-success">
                                 <i class="fas fa-check-circle me-2"></i>
                                 <?php echo $success; ?>
                                 <br><a href="my-bookings.php" class="alert-link">Lihat riwayat booking</a>
                             </div>
                         <?php endif; ?>
-                        
                         <form method="POST" id="bookingForm" enctype="multipart/form-data">
                             <div class="row">
                                 <div class="col-md-6 mb-3">
